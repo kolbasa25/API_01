@@ -1,14 +1,29 @@
-import requests
 import time
+import requests
 
-cities = ["Лондон", "Шереметьево", "Череповец"]
-url_template = "http://wttr.in/{}?lang=ru&m&n&q&T"
 
-headers = {"User-Agent": "curl/8.0"}
+CITIES = [
+    "Лондон",
+    "Шереметьево",
+    "Череповец"
+]
 
-for city in cities:
-    url = url_template.format(city)
-    response = requests.get(url, headers=headers)
+URL_TEMPLATE = "http://wttr.in/{}?lang=ru&m&n&q&T"
+HEADERS = {"User-Agent": "curl/8.0"}
+
+
+def get_weather(city_name):
+    url = URL_TEMPLATE.format(city_name)
+    response = requests.get(url, headers=HEADERS)
     response.raise_for_status()
-    print(response.text)
-    time.sleep(1)  
+    return response.text
+
+
+def main():
+    for city in CITIES:
+        print(get_weather(city))
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    main()
