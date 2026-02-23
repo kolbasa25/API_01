@@ -8,13 +8,24 @@ CITIES = [
     "Череповец"
 ]
 
-URL_TEMPLATE = "http://wttr.in/{}?lang=ru&m&n&q&T"
+URL_TEMPLATE = "http://wttr.in/{}"
 HEADERS = {"User-Agent": "curl/8.0"}
+
+PARAMS = {
+    "lang": "ru",
+    "m": "",
+    "n": "",
+    "q": "",
+    "T": ""
+}
 
 
 def get_weather(city_name):
-    url = URL_TEMPLATE.format(city_name)
-    response = requests.get(url, headers=HEADERS)
+    response = requests.get(
+        URL_TEMPLATE.format(city_name),
+        headers=HEADERS,
+        params=PARAMS
+    )
     response.raise_for_status()
     return response.text
 
